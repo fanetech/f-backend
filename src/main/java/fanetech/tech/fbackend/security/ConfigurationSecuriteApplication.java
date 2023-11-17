@@ -20,8 +20,8 @@ public class ConfigurationSecuriteApplication  {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize ->
-                                authorize.requestMatchers(HttpMethod.POST, "/inscription")
-                                        .permitAll()
+                                authorize.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/activation").permitAll()
                                         .anyRequest()
                                         .authenticated()
                 ).build();

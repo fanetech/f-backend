@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -23,5 +25,11 @@ public class UtilisateurController {
         log.info("Inscription");
         System.out.println(user.getNom());
         this.utilisateurService.inscription(user);
+    }
+
+    @PostMapping(path = "activation")
+    public void activation(@RequestBody Map<String, String> activation){
+        this.utilisateurService.activation(activation);
+
     }
 }
