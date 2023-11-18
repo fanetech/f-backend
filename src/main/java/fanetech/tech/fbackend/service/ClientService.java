@@ -2,6 +2,7 @@ package fanetech.tech.fbackend.service;
 
 import fanetech.tech.fbackend.entites.Client;
 import fanetech.tech.fbackend.repository.ClientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class ClientService {
 
     public Client getOne(int id){
         Optional<Client> optionalClient = this.clientRepository.findById(id);
-        return optionalClient.orElse(null);
+        return optionalClient.orElseThrow(()-> new EntityNotFoundException("User unkwon"));
     }
 
     public String delete(int id){
