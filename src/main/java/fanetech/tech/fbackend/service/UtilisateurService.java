@@ -6,6 +6,10 @@ import fanetech.tech.fbackend.entites.Validation;
 import fanetech.tech.fbackend.enums.TypeDeRole;
 import fanetech.tech.fbackend.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UtilisateurService {
+public class UtilisateurService implements UserDetailsService {
 
     private UtilisateurRepository utilisateurRepository;
     private BCryptPasswordEncoder passwordEncoder;
@@ -54,5 +58,10 @@ public class UtilisateurService {
         User user = this.utilisateurRepository.findById(validation.getUser().getId()).orElseThrow(() -> new RuntimeException("user unkwon"));
         user.setActif(true);
         this.utilisateurRepository.save(user);
+    }
+
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return  this.utilisateurRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 }
