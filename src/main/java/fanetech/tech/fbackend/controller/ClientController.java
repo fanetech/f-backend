@@ -1,5 +1,6 @@
 package fanetech.tech.fbackend.controller;
 
+import fanetech.tech.fbackend.dto.ClientDTO;
 import fanetech.tech.fbackend.dto.ErrorEntity;
 import fanetech.tech.fbackend.entites.Client;
 import fanetech.tech.fbackend.service.ClientService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(path = "client")
@@ -29,7 +31,7 @@ public class ClientController {
 
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @GetMapping(produces = "application/json")
-    public List<Client> getAll(){
+    public Stream<ClientDTO> getAll(){
         return this.clientService.getAll();
     }
 /*

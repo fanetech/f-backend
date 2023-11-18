@@ -1,19 +1,23 @@
 package fanetech.tech.fbackend.service;
 
+import fanetech.tech.fbackend.dto.ClientDTO;
 import fanetech.tech.fbackend.entites.Client;
+import fanetech.tech.fbackend.mapper.ClientDTOMapper;
 import fanetech.tech.fbackend.repository.ClientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class ClientService {
     private ClientRepository clientRepository;
+    private ClientDTOMapper clientDTOMapper;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, ClientDTOMapper clientDTOMapper) {
         this.clientRepository = clientRepository;
+        this.clientDTOMapper = clientDTOMapper;
     }
 
     public void create(Client client){
@@ -23,8 +27,9 @@ public class ClientService {
         }
     }
 
-    public List<Client> getAll(){
-        return this.clientRepository.findAll();
+    public Stream<ClientDTO> getAll(){
+        return this.clientRepository.findAll()
+                .stream().map(clientDTOMapper);
     }
 
     public Client getOne(int id){
